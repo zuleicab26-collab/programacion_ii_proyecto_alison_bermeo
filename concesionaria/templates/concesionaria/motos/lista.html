@@ -1,0 +1,37 @@
+{% extends 'concesionaria/base.html' %}
+
+{% block title %}Motos{% endblock %}
+
+{% block content %}
+<h1>Motos</h1>
+
+<p><a href="{% url 'moto_create' %}">Registrar nueva moto</a></p>
+
+<table border="1">
+    <tr>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Año</th>
+        <th>Cilindrada</th>
+        <th>Precio</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+    {% for moto in motos %}
+    <tr>
+        <td><a href="{{ moto.marca.get_absolute_url }}">{{ moto.marca.nombre }}</a></td>
+        <td><a href="{{ moto.get_absolute_url }}">{{ moto.modelo }}</a></td>
+        <td>{{ moto.anio }}</td>
+        <td>{{ moto.cilindrada }} cc</td>
+        <td>${{ moto.precio }}</td>
+        <td>{{ moto.get_estado_display }}</td>
+        <td>
+            <a href="{% url 'moto_update' moto.pk %}">Editar</a> |
+            <a href="{% url 'moto_delete' moto.pk %}">Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="7">No hay motos registradas.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

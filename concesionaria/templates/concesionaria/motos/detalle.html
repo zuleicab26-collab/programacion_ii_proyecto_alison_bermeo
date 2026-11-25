@@ -1,0 +1,36 @@
+{% extends 'concesionaria/base.html' %}
+
+{% block title %}{{ moto }}{% endblock %}
+
+{% block content %}
+<h1>{{ moto }}</h1>
+
+<ul>
+    <li>Marca: <a href="{{ moto.marca.get_absolute_url }}">{{ moto.marca.nombre }}</a></li>
+    <li>Modelo: {{ moto.modelo }}</li>
+    <li>Año: {{ moto.anio }}</li>
+    <li>Cilindrada: {{ moto.cilindrada }} cc</li>
+    <li>Precio: ${{ moto.precio }}</li>
+    <li>Estado: {{ moto.get_estado_display }}</li>
+    <li>Ingresó el: {{ moto.fecha_ingreso|date:"d/m/Y" }}</li>
+    <li>Registrada por: {{ moto.creado_por.username }}</li>
+</ul>
+
+<h2>Ventas en las que aparece</h2>
+<ul>
+    {% for venta in ventas %}
+        <li>
+            <a href="{{ venta.get_absolute_url }}">Venta #{{ venta.pk }}</a>
+            - {{ venta.cliente.nombre }} - {{ venta.fecha|date:"d/m/Y" }}
+        </li>
+    {% empty %}
+        <li>Esta moto no ha sido vendida.</li>
+    {% endfor %}
+</ul>
+
+<p>
+    <a href="{% url 'moto_update' moto.pk %}">Editar</a> |
+    <a href="{% url 'moto_delete' moto.pk %}">Eliminar</a> |
+    <a href="{% url 'moto_list' %}">Volver al listado</a>
+</p>
+{% endblock %}

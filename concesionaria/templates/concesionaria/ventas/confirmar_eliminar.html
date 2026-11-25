@@ -1,0 +1,16 @@
+{% extends 'concesionaria/base.html' %}
+
+{% block title %}Eliminar venta{% endblock %}
+
+{% block content %}
+<h1>Eliminar venta</h1>
+
+<p>¿Está seguro de que desea eliminar la <strong>venta #{{ venta.pk }}</strong> de {{ venta.cliente.nombre }}?</p>
+<p>Esta acción no se puede deshacer.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Sí, eliminar</button>
+    <a href="{% url 'venta_detail' venta.pk %}">Cancelar</a>
+</form>
+{% endblock %}

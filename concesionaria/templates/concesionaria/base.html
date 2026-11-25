@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Concesionaria de motos{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'moto_list' %}">Motos</a> |
+        <a href="{% url 'marca_list' %}">Marcas</a> |
+        <a href="{% url 'cliente_list' %}">Clientes</a> |
+        <a href="{% url 'venta_list' %}">Ventas</a>
+    </nav>
+    <hr>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

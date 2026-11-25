@@ -1,0 +1,24 @@
+{% extends 'concesionaria/base.html' %}
+
+{% block title %}{{ cliente.nombre }}{% endblock %}
+
+{% block content %}
+<h1>{{ cliente.nombre }}</h1>
+<p>Cédula: {{ cliente.cedula }}</p>
+<p>Correo: {{ cliente.email|default:"No registrado" }}</p>
+<p>Teléfono: {{ cliente.telefono|default:"No registrado" }}</p>
+
+<h2>Compras</h2>
+<ul>
+    {% for venta in compras %}
+        <li>
+            <a href="{{ venta.get_absolute_url }}">Venta #{{ venta.pk }}</a>
+            - {{ venta.fecha|date:"d/m/Y" }} - ${{ venta.total }}
+        </li>
+    {% empty %}
+        <li>Este cliente aún no tiene compras.</li>
+    {% endfor %}
+</ul>
+
+<p><a href="{% url 'cliente_list' %}">Volver al listado</a></p>
+{% endblock %}

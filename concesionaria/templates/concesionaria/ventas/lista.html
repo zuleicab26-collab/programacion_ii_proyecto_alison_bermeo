@@ -1,0 +1,35 @@
+{% extends 'concesionaria/base.html' %}
+
+{% block title %}Ventas{% endblock %}
+
+{% block content %}
+<h1>Ventas</h1>
+
+<p><a href="{% url 'venta_create' %}">Registrar nueva venta</a></p>
+
+<table border="1">
+    <tr>
+        <th>N.º</th>
+        <th>Fecha</th>
+        <th>Cliente</th>
+        <th>Forma de pago</th>
+        <th>Total</th>
+        <th>Acciones</th>
+    </tr>
+    {% for venta in ventas %}
+    <tr>
+        <td><a href="{{ venta.get_absolute_url }}">#{{ venta.pk }}</a></td>
+        <td>{{ venta.fecha|date:"d/m/Y" }}</td>
+        <td><a href="{{ venta.cliente.get_absolute_url }}">{{ venta.cliente.nombre }}</a></td>
+        <td>{{ venta.get_forma_pago_display }}</td>
+        <td>${{ venta.total }}</td>
+        <td>
+            <a href="{% url 'venta_update' venta.pk %}">Editar</a> |
+            <a href="{% url 'venta_delete' venta.pk %}">Eliminar</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6">No hay ventas registradas.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

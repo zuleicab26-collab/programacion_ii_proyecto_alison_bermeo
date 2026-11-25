@@ -1,0 +1,16 @@
+{% extends 'concesionaria/base.html' %}
+
+{% block title %}{% if venta %}Editar venta{% else %}Nueva venta{% endif %}{% endblock %}
+
+{% block content %}
+<h1>{% if venta %}Editar venta{% else %}Nueva venta{% endif %}</h1>
+
+<p>El total se calcula automáticamente con el precio de las motos elegidas.</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+    <a href="{% url 'venta_list' %}">Cancelar</a>
+</form>
+{% endblock %}
