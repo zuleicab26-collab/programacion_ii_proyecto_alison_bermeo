@@ -1,5 +1,9 @@
-from concesionaria.views.marca_views import marca_list, marca_detail
-from concesionaria.views.cliente_views import cliente_list, cliente_detail
+from concesionaria.views.marca_views import (
+    marca_list, marca_detail, marca_create, marca_update, marca_delete,
+)
+from concesionaria.views.cliente_views import (
+    cliente_list, cliente_detail, cliente_create, cliente_update, cliente_delete,
+)
 from concesionaria.views.moto_views import (
     moto_list, moto_detail, moto_create, moto_update, moto_delete,
 )

@@ -4,21 +4,34 @@
 
 {% block content %}
 <h1>Marcas</h1>
-
+{% if perms.concesionaria.add_marca %}
+<p><a class="boton" href="{% url 'marca_create' %}">Registrar nueva marca</a></p>
+{% endif %}
 <table border="1">
     <tr>
         <th>Nombre</th>
         <th>País de origen</th>
         <th>Motos</th>
+        <th>Acciones</th>
     </tr>
     {% for marca in marcas %}
     <tr>
         <td><a href="{{ marca.get_absolute_url }}">{{ marca.nombre }}</a></td>
         <td>{{ marca.pais_origen }}</td>
         <td>{{ marca.motos.count }}</td>
+        <td>
+            <div class="acciones">
+                {% if perms.concesionaria.change_marca %}
+                    <a class="boton boton-secundario" href="{% url 'marca_update' marca.pk %}">Editar</a>
+                {% endif %}
+                {% if perms.concesionaria.delete_marca %}
+                    <a class="boton boton-peligro" href="{% url 'marca_delete' marca.pk %}">Eliminar</a>
+                {% endif %}
+            </div>
+        </td>
     </tr>
     {% empty %}
-    <tr><td colspan="3">No hay marcas registradas.</td></tr>
+    <tr><td colspan="4">No hay marcas registradas.</td></tr>
     {% endfor %}
 </table>
 {% endblock %}

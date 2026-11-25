@@ -1,0 +1,16 @@
+{% extends 'concesionaria/base.html' %}
+
+{% block title %}Eliminar cliente{% endblock %}
+
+{% block content %}
+<h1>Eliminar cliente</h1>
+
+<p>¿Está seguro de que desea eliminar a <strong>{{ cliente.nombre }}</strong>?</p>
+<p>Esta acción no se puede deshacer.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="boton-peligro">Sí, eliminar</button>
+    <a class="boton boton-secundario" href="{% url 'cliente_detail' cliente.pk %}">Cancelar</a>
+</form>
+{% endblock %}

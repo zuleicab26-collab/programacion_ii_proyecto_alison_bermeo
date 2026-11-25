@@ -50,8 +50,8 @@ con autenticación y control de acceso por grupos.
 
 | Grupo | Puede | No puede |
 |---|---|---|
-| administradores | Crear, editar y eliminar en las 4 entidades | — |
-| vendedores | Ver todo y crear ventas | Crear o modificar motos; editar o eliminar ventas ajenas |
+| administradores | Crear, editar y eliminar en las 4 entidades (marcas, clientes, motos y ventas) | — |
+| vendedores | Ver todo; crear clientes; crear ventas, y editar o eliminar solo las que registró | Crear o modificar marcas y motos; editar o eliminar ventas ajenas; editar o eliminar clientes |
 
 Los usuarios que se registran en `/registro/` entran al grupo vendedores.
 
