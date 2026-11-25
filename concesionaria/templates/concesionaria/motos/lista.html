@@ -6,8 +6,7 @@
 <h1>Motos</h1>
 
 {% if perms.concesionaria.add_moto %}
-<p><a href="{% url 'moto_create' %}">Registrar nueva moto</a></p>
-{% endif %}
+<p><a class="boton" href="{% url 'moto_create' %}">Registrar nueva moto</a></p>
 
 <table border="1">
     <tr>
@@ -28,12 +27,14 @@
         <td>${{ moto.precio }}</td>
         <td>{{ moto.get_estado_display }}</td>
         <td>
+            <div class="acciones">
             {% if perms.concesionaria.change_moto %}
-                <a href="{% url 'moto_update' moto.pk %}">Editar</a>
+                <a class="boton boton-secundario" href="{% url 'moto_update' moto.pk %}">Editar</a>
             {% endif %}
             {% if perms.concesionaria.delete_moto %}
-                <a href="{% url 'moto_delete' moto.pk %}">Eliminar</a>
+                <a class="boton boton-peligro" href="{% url 'moto_delete' moto.pk %}">Eliminar</a>
             {% endif %}
+            </div>
         </td>
     </tr>
     {% empty %}

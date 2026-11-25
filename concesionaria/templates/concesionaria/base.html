@@ -1,32 +1,36 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Concesionaria de motos{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'concesionaria/css/estilos.css' %}">
 </head>
 <body>
-        <nav>
-        <a href="{% url 'moto_list' %}">Motos</a> |
-        <a href="{% url 'marca_list' %}">Marcas</a> |
-        <a href="{% url 'cliente_list' %}">Clientes</a> |
-        <a href="{% url 'venta_list' %}">Ventas</a> |
+    <nav class="navbar">
+        <span class="marca">🏍️ Motos</span>
+        <a href="{% url 'moto_list' %}">Motos</a>
+        <a href="{% url 'marca_list' %}">Marcas</a>
+        <a href="{% url 'cliente_list' %}">Clientes</a>
+        <a href="{% url 'venta_list' %}">Ventas</a>
 
-        {% if user.is_authenticated %}
-            Hola, <strong>{{ user.username }}</strong>
-            <form method="post" action="{% url 'logout' %}" style="display:inline">
-                {% csrf_token %}
-                <button type="submit">Salir</button>
-            </form>
-        {% else %}
-            <a href="{% url 'login' %}">Entrar</a> |
-            <a href="{% url 'registro' %}">Registrarse</a>
-        {% endif %}
+        <div class="sesion">
+            {% if user.is_authenticated %}
+                <span>Hola, <strong>{{ user.username }}</strong></span>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Salir</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Entrar</a>
+                <a href="{% url 'registro' %}">Registrarse</a>
+            {% endif %}
+        </div>
     </nav>
-    <hr>
 
     {% if messages %}
-        <ul>
+        <ul class="mensajes">
             {% for message in messages %}
                 <li>{{ message }}</li>
             {% endfor %}

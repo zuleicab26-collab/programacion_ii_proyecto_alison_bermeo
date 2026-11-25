@@ -10,7 +10,7 @@
 
 <form method="post">
     {% csrf_token %}
-    <button type="submit">Sí, eliminar</button>
-    <a href="{% url 'moto_detail' moto.pk %}">Cancelar</a>
+    <button type="submit" class="boton-peligro">Sí, eliminar</button>
+    <a class="boton boton-secundario" href="{% url 'moto_detail' moto.pk %}">Cancelar</a>
 </form>
 {% endblock %}
