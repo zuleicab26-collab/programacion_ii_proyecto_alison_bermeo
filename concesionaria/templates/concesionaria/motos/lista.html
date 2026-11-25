@@ -5,7 +5,9 @@
 {% block content %}
 <h1>Motos</h1>
 
+{% if perms.concesionaria.add_moto %}
 <p><a href="{% url 'moto_create' %}">Registrar nueva moto</a></p>
+{% endif %}
 
 <table border="1">
     <tr>
@@ -26,8 +28,12 @@
         <td>${{ moto.precio }}</td>
         <td>{{ moto.get_estado_display }}</td>
         <td>
-            <a href="{% url 'moto_update' moto.pk %}">Editar</a> |
-            <a href="{% url 'moto_delete' moto.pk %}">Eliminar</a>
+            {% if perms.concesionaria.change_moto %}
+                <a href="{% url 'moto_update' moto.pk %}">Editar</a>
+            {% endif %}
+            {% if perms.concesionaria.delete_moto %}
+                <a href="{% url 'moto_delete' moto.pk %}">Eliminar</a>
+            {% endif %}
         </td>
     </tr>
     {% empty %}

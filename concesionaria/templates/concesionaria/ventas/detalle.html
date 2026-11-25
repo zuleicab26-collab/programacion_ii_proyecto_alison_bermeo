@@ -25,8 +25,14 @@
 </ul>
 
 <p>
-    <a href="{% url 'venta_update' venta.pk %}">Editar</a> |
-    <a href="{% url 'venta_delete' venta.pk %}">Eliminar</a> |
+    {% if puede_modificar %}
+        {% if perms.concesionaria.change_venta %}
+            <a href="{% url 'venta_update' venta.pk %}">Editar</a> |
+        {% endif %}
+        {% if perms.concesionaria.delete_venta %}
+            <a href="{% url 'venta_delete' venta.pk %}">Eliminar</a> |
+        {% endif %}
+    {% endif %}
     <a href="{% url 'venta_list' %}">Volver al listado</a>
 </p>
 {% endblock %}

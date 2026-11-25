@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from concesionaria.forms import MotoForm
@@ -22,6 +22,7 @@ def moto_detail(request, pk):
 
 
 @login_required
+@permission_required('concesionaria.add_moto', raise_exception=True)
 def moto_create(request):
     if request.method == 'POST':
         form = MotoForm(request.POST)
@@ -37,6 +38,7 @@ def moto_create(request):
 
 
 @login_required
+@permission_required('concesionaria.change_moto', raise_exception=True)
 def moto_update(request, pk):
     moto = get_object_or_404(Moto, pk=pk)
     if request.method == 'POST':
@@ -55,6 +57,7 @@ def moto_update(request, pk):
 
 
 @login_required
+@permission_required('concesionaria.delete_moto', raise_exception=True)
 def moto_delete(request, pk):
     moto = get_object_or_404(Moto, pk=pk)
     if request.method == 'POST':

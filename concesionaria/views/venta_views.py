@@ -1,10 +1,19 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
+from django.core.exceptions import PermissionDenied
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
 
 from concesionaria.forms import VentaForm
 from concesionaria.models import Venta
+
+
+def _es_admin(user):
+    return user.is_superuser or user.groups.filter(name='administradores').exists()
+
+
+def _puede_modificar(user, venta):
+    return _es_admin(user) or venta.creado_por_id == user.id
 
 
 def _recalcular_total(venta):
@@ -14,21 +23,29 @@ def _recalcular_total(venta):
 
 
 def venta_list(request):
-    ventas = Venta.objects.select_related('cliente')
-    return render(request, 'concesionaria/ventas/lista.html', {'ventas': ventas})
+    ventas = Venta.objects.select_related('cliente', 'creado_por')
+    return render(
+        request,
+        'concesionaria/ventas/lista.html',
+        {'ventas': ventas, 'es_admin': _es_admin(request.user)},
+    )
 
 
 def venta_detail(request, pk):
     venta = get_object_or_404(Venta, pk=pk)
     motos = venta.motos.select_related('marca')
+    puede_modificar = (
+        request.user.is_authenticated and _puede_modificar(request.user, venta)
+    )
     return render(
         request,
         'concesionaria/ventas/detalle.html',
-        {'venta': venta, 'motos': motos},
+        {'venta': venta, 'motos': motos, 'puede_modificar': puede_modificar},
     )
 
 
 @login_required
+@permission_required('concesionaria.add_venta', raise_exception=True)
 def venta_create(request):
     if request.method == 'POST':
         form = VentaForm(request.POST)
@@ -47,8 +64,11 @@ def venta_create(request):
 
 
 @login_required
+@permission_required('concesionaria.change_venta', raise_exception=True)
 def venta_update(request, pk):
     venta = get_object_or_404(Venta, pk=pk)
+    if not _puede_modificar(request.user, venta):
+        raise PermissionDenied
     if request.method == 'POST':
         form = VentaForm(request.POST, instance=venta)
         if form.is_valid():
@@ -66,8 +86,11 @@ def venta_update(request, pk):
 
 
 @login_required
+@permission_required('concesionaria.delete_venta', raise_exception=True)
 def venta_delete(request, pk):
     venta = get_object_or_404(Venta, pk=pk)
+    if not _puede_modificar(request.user, venta):
+        raise PermissionDenied
     if request.method == 'POST':
         venta.delete()
         messages.success(request, 'Venta eliminada exitosamente.')
