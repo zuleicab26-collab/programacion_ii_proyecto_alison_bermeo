@@ -6,3 +6,4 @@ from concesionaria.views.moto_views import (
 from concesionaria.views.venta_views import (
     venta_list, venta_detail, venta_create, venta_update, venta_delete,
 )
+from concesionaria.views.auth_views import registro, login_view, logout_view

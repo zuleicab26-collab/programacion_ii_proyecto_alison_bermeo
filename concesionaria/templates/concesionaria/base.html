@@ -6,11 +6,22 @@
     <title>{% block title %}Concesionaria de motos{% endblock %}</title>
 </head>
 <body>
-    <nav>
+        <nav>
         <a href="{% url 'moto_list' %}">Motos</a> |
         <a href="{% url 'marca_list' %}">Marcas</a> |
         <a href="{% url 'cliente_list' %}">Clientes</a> |
-        <a href="{% url 'venta_list' %}">Ventas</a>
+        <a href="{% url 'venta_list' %}">Ventas</a> |
+
+        {% if user.is_authenticated %}
+            Hola, <strong>{{ user.username }}</strong>
+            <form method="post" action="{% url 'logout' %}" style="display:inline">
+                {% csrf_token %}
+                <button type="submit">Salir</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Entrar</a> |
+            <a href="{% url 'registro' %}">Registrarse</a>
+        {% endif %}
     </nav>
     <hr>
 
