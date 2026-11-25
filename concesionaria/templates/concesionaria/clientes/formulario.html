@@ -1,0 +1,14 @@
+{% extends 'concesionaria/base.html' %}
+
+{% block title %}{% if cliente %}Editar cliente{% else %}Nuevo cliente{% endif %}{% endblock %}
+
+{% block content %}
+<h1>{% if cliente %}Editar cliente{% else %}Nuevo cliente{% endif %}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+    <a class="boton boton-secundario" href="{% url 'cliente_list' %}">Cancelar</a>
+</form>
+{% endblock %}

@@ -1,9 +1,17 @@
 from decimal import Decimal
 
 from django.core.management import call_command
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
+from django.urls import reverse
 
 from concesionaria.models import Venta
+
+
+class ClienteURLTests(SimpleTestCase):
+    def test_cliente_crud_urls_can_be_reversed(self):
+        self.assertEqual(reverse('cliente_create'), '/clientes/nueva/')
+        self.assertEqual(reverse('cliente_update', args=[1]), '/clientes/1/editar/')
+        self.assertEqual(reverse('cliente_delete', args=[1]), '/clientes/1/eliminar/')
 
 
 class CargarDatosCommandTests(TestCase):

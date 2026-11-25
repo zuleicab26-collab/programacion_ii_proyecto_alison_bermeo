@@ -9,7 +9,7 @@
 <p><a class="boton" href="{% url 'venta_create' %}">Registrar nueva venta</a></p>
 {% endif %}
 
-<table border="1">
+<table>
     <tr>
         <th>N.º</th>
         <th>Fecha</th>
@@ -20,18 +20,23 @@
     </tr>
     {% for venta in ventas %}
     <tr>
-    <td>
-        <div class="acciones">
-        {% if es_admin or venta.creado_por == user %}
-        {% if perms.concesionaria.change_venta %}
-                <a class="boton boton-secundario" href="{% url 'venta_update' venta.pk %}">Editar</a>
-             {% endif %}
-             {% if perms.concesionaria.delete_venta %}
-                <a class="boton boton-peligro" href="{% url 'venta_delete' venta.pk %}">Eliminar</a>
-            {% endif %}
-         {% endif %}
-        </div>
-     </td>
+        <td><a href="{{ venta.get_absolute_url }}">#{{ venta.pk }}</a></td>
+        <td>{{ venta.fecha|date:"d/m/Y" }}</td>
+        <td><a href="{{ venta.cliente.get_absolute_url }}">{{ venta.cliente.nombre }}</a></td>
+        <td>{{ venta.get_forma_pago_display }}</td>
+        <td>${{ venta.total }}</td>
+        <td>
+            <div class="acciones">
+                {% if es_admin or venta.creado_por == user %}
+                    {% if perms.concesionaria.change_venta %}
+                        <a class="boton boton-secundario" href="{% url 'venta_update' venta.pk %}">Editar</a>
+                    {% endif %}
+                    {% if perms.concesionaria.delete_venta %}
+                        <a class="boton boton-peligro" href="{% url 'venta_delete' venta.pk %}">Eliminar</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </td>
     </tr>
     {% empty %}
     <tr><td colspan="6">No hay ventas registradas.</td></tr>

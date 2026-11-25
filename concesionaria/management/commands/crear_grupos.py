@@ -11,10 +11,9 @@ GRUPOS = {
     ],
     'vendedores': (
         [f'view_{modelo}' for modelo in MODELOS]
-        + ['add_venta', 'change_venta', 'delete_venta']
+        + ['add_cliente', 'add_venta', 'change_venta', 'delete_venta']
     ),
 }
-
 
 class Command(BaseCommand):
     help = 'Crea los grupos administradores y vendedores con sus permisos.'

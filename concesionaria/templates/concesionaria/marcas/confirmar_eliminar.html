@@ -1,0 +1,16 @@
+{% extends 'concesionaria/base.html' %}
+
+{% block title %}Eliminar marca{% endblock %}
+
+{% block content %}
+<h1>Eliminar marca</h1>
+
+<p>¿Está seguro de que desea eliminar <strong>{{ marca }}</strong>?</p>
+<p>Esta acción no se puede deshacer.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="boton-peligro">Sí, eliminar</button>
+    <a class="boton boton-secundario" href="{% url 'marca_detail' marca.pk %}">Cancelar</a>
+</form>
+{% endblock %}
