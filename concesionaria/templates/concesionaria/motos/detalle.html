@@ -29,8 +29,12 @@
 </ul>
 
 <p>
-    <a href="{% url 'moto_update' moto.pk %}">Editar</a> |
-    <a href="{% url 'moto_delete' moto.pk %}">Eliminar</a> |
+    {% if perms.concesionaria.change_moto %}
+        <a href="{% url 'moto_update' moto.pk %}">Editar</a> |
+    {% endif %}
+    {% if perms.concesionaria.delete_moto %}
+        <a href="{% url 'moto_delete' moto.pk %}">Eliminar</a> |
+    {% endif %}
     <a href="{% url 'moto_list' %}">Volver al listado</a>
 </p>
 {% endblock %}
