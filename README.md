@@ -11,8 +11,8 @@ con autenticación y control de acceso por grupos.
 
 1. Clonar el repositorio y entrar en la carpeta:
    ```
-   git clone URL_DEL_REPOSITORIO
-   cd motos-app
+   https://github.com/zuleicab26-collab/programacion_ii_proyecto_alison_bermeo.git
+   programacion_ii_proyecto_alison_bermeo
    ```
 2. Crear y activar el entorno virtual:
    ```
