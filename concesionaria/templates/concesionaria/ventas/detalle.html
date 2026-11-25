@@ -1,0 +1,32 @@
+{% extends 'concesionaria/base.html' %}
+
+{% block title %}Venta #{{ venta.pk }}{% endblock %}
+
+{% block content %}
+<h1>Venta #{{ venta.pk }}</h1>
+
+<ul>
+    <li>Fecha: {{ venta.fecha|date:"d/m/Y" }}</li>
+    <li>Cliente: <a href="{{ venta.cliente.get_absolute_url }}">{{ venta.cliente.nombre }}</a></li>
+    <li>Forma de pago: {{ venta.get_forma_pago_display }}</li>
+    <li>Total: ${{ venta.total }}</li>
+    <li>Registrada por: {{ venta.creado_por.username }}</li>
+</ul>
+
+<h2>Motos vendidas</h2>
+<ul>
+    {% for moto in motos %}
+        <li>
+            <a href="{{ moto.get_absolute_url }}">{{ moto }}</a> - ${{ moto.precio }}
+        </li>
+    {% empty %}
+        <li>Esta venta no tiene motos.</li>
+    {% endfor %}
+</ul>
+
+<p>
+    <a href="{% url 'venta_update' venta.pk %}">Editar</a> |
+    <a href="{% url 'venta_delete' venta.pk %}">Eliminar</a> |
+    <a href="{% url 'venta_list' %}">Volver al listado</a>
+</p>
+{% endblock %}

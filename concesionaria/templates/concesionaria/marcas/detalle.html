@@ -1,0 +1,22 @@
+{% extends 'concesionaria/base.html' %}
+
+{% block title %}{{ marca.nombre }}{% endblock %}
+
+{% block content %}
+<h1>{{ marca.nombre }}</h1>
+<p>País de origen: {{ marca.pais_origen }}</p>
+
+<h2>Motos de esta marca</h2>
+<ul>
+    {% for moto in motos %}
+        <li>
+            <a href="{{ moto.get_absolute_url }}">{{ moto.modelo }} ({{ moto.anio }})</a>
+            - ${{ moto.precio }} - {{ moto.get_estado_display }}
+        </li>
+    {% empty %}
+        <li>Esta marca no tiene motos registradas.</li>
+    {% endfor %}
+</ul>
+
+<p><a href="{% url 'marca_list' %}">Volver al listado</a></p>
+{% endblock %}

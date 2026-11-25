@@ -1,0 +1,16 @@
+{% extends 'concesionaria/base.html' %}
+
+{% block title %}Eliminar moto{% endblock %}
+
+{% block content %}
+<h1>Eliminar moto</h1>
+
+<p>¿Está seguro de que desea eliminar <strong>{{ moto }}</strong>?</p>
+<p>Esta acción no se puede deshacer.</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Sí, eliminar</button>
+    <a href="{% url 'moto_detail' moto.pk %}">Cancelar</a>
+</form>
+{% endblock %}
