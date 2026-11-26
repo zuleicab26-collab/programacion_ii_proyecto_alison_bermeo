@@ -56,14 +56,17 @@ con autenticación y control de acceso por grupos.
 Los usuarios que se registran en `/registro/` entran al grupo vendedores.
 
 ## Regla de propiedad
-Una venta solo puede ser editada o eliminada por quien la creó o por un
-administrador. Se aplica en la vista (responde 403) y en la plantilla
-(oculta los botones).
+Una venta solo puede ser editada o eliminada por quien la creó o por un administrador. Se aplica en la vista (responde 403) y en la plantilla (oculta los botones).
+
+En los datos de prueba, las ventas #3 y #4 las registró `gerente`, por lo que el usuario `vendedor` no puede modificarlas.
 
 ## Estructura
 Un archivo por entidad en `models/`, `forms/`, `views/` y `urls/`, con
 `__init__.py` que re-exportan. Las plantillas usan doble carpeta:
 `concesionaria/templates/concesionaria/<entidad>/`.
+
+Los estilos están en `concesionaria/static/concesionaria/css/estilos.css`
+(CSS propio, sin frameworks externos).
 
 ## Comandos de gestión
 - `python manage.py crear_grupos`: crea los grupos y sus permisos.
